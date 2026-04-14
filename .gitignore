@@ -1,0 +1,7 @@
+# Resume source doc — keep off GitHub
+*.docx
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
