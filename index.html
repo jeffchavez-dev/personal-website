@@ -221,11 +221,15 @@
     /* ─── HERO ──────────────────────────────────────────────── */
     .hero {
       position: relative; z-index: 1;
-      min-height: 100svh; display: flex; align-items: center;
+      min-height: 100svh; display: flex;
+      align-items: center; justify-content: space-between;
+      gap: 60px;
       max-width: var(--max); margin: 0 auto;
       padding: 120px 24px 80px;
       opacity: 1; transform: none;
     }
+
+    .hero-inner { flex: 1; min-width: 0; }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -246,20 +250,123 @@
       100% { box-shadow: 0 0 0 0 rgba(56,224,138,0); }
     }
 
-    .hero-avatar {
-      width: 92px; height: 92px; border-radius: 50%;
-      border: 2px solid var(--border-h);
-      overflow: hidden; margin-bottom: 28px;
-      box-shadow: 0 0 0 4px rgba(56,189,248,0.08), 0 0 40px rgba(56,189,248,0.15);
-      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
-                  box-shadow 0.3s ease;
-      will-change: transform;
+    /* ─── HERO PHOTO ─────────────────────────────────────────── */
+    .hero-photo-wrap {
+      position: relative; flex-shrink: 0;
+      width: 300px; height: 340px;
+      display: flex; align-items: center; justify-content: center;
     }
-    .hero-avatar:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 0 6px rgba(56,189,248,0.14), 0 0 60px rgba(56,189,248,0.35);
+
+    /* Photo itself — floats up and down */
+    .photo-frame {
+      position: relative;
+      width: 270px; height: 310px;
+      border-radius: 20px; overflow: hidden;
+      z-index: 3;
+      animation: float 6s ease-in-out infinite;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55),
+                  0 0 40px rgba(56,189,248,0.12);
     }
-    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+
+    /* Scan line sweeps down the photo */
+    .scan-line {
+      position: absolute; left: 0; right: 0; top: 0;
+      height: 2px; pointer-events: none; z-index: 5;
+      background: linear-gradient(to right,
+        transparent, rgba(56,189,248,0.9), transparent);
+      animation: scanDown 3.5s ease-in-out infinite;
+    }
+    @keyframes scanDown {
+      0%   { top: -2px; opacity: 1; }
+      85%  { opacity: 0.6; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* Spinning conic-gradient ring */
+    .ring-spinner {
+      position: absolute;
+      width: 282px; height: 322px;
+      left: 50%; top: 50%;
+      border-radius: 26px;
+      background: conic-gradient(
+        from 0deg,
+        #38bdf8 0%, #0ea5e9 18%,
+        transparent 38%, transparent 62%,
+        #0ea5e9 82%, #38bdf8 100%
+      );
+      animation: spinRing 5s linear infinite;
+      z-index: 2;
+    }
+    .ring-spinner::after {
+      content: ''; position: absolute; inset: 4px;
+      border-radius: 22px; background: var(--bg);
+    }
+    @keyframes spinRing {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Pulsing rings expanding outward */
+    .pulse-ring {
+      position: absolute;
+      width: 310px; height: 350px;
+      left: 50%; top: 50%;
+      border-radius: 30px;
+      border: 1.5px solid rgba(56,189,248,0.35);
+      animation: pulseOut 3.5s ease-out infinite;
+      z-index: 1;
+    }
+    .pulse-ring:nth-child(2) { animation-delay: 1.75s; }
+    @keyframes pulseOut {
+      0%   { transform: translate(-50%,-50%) scale(1);    opacity: 0.6; }
+      100% { transform: translate(-50%,-50%) scale(1.22); opacity: 0; }
+    }
+
+    /* Corner tech brackets */
+    .corner-brackets {
+      position: absolute;
+      width: 270px; height: 310px;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4; pointer-events: none;
+    }
+    .cb {
+      position: absolute;
+      width: 22px; height: 22px;
+      border-color: var(--accent); border-style: solid;
+      filter: drop-shadow(0 0 5px rgba(56,189,248,0.9));
+    }
+    .cb.tl { top: -6px;    left: -6px;   border-width: 2.5px 0 0 2.5px; }
+    .cb.tr { top: -6px;    right: -6px;  border-width: 2.5px 2.5px 0 0; }
+    .cb.bl { bottom: -6px; left: -6px;   border-width: 0 0 2.5px 2.5px; }
+    .cb.br { bottom: -6px; right: -6px;  border-width: 0 2.5px 2.5px 0; }
+
+    /* Hero mobile — stack vertically */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 48px;
+        padding-top: 100px;
+      }
+      .hero-photo-wrap {
+        width: 200px; height: 230px;
+        align-self: center;
+      }
+      .photo-frame  { width: 180px; height: 210px; }
+      .ring-spinner { width: 192px; height: 222px; }
+      .pulse-ring   { width: 210px; height: 240px; }
+      .corner-brackets { width: 180px; height: 210px; }
+    }
 
     .hero h1 {
       font-size: clamp(2rem, 5vw, 3rem);
@@ -544,16 +651,12 @@
 
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <div class="hero" id="hero">
-    <div class="hero-inner" id="heroInner">
 
+    <!-- Left: text content -->
+    <div class="hero-inner" id="heroInner">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
         Available for new projects
-      </div>
-
-      <!-- PHOTO: swap contents with <img src="photo.jpg" alt="Jeff Chavez" /> -->
-      <div class="hero-avatar">
-        <img src="Jeff_photo.png" alt="Jeff Chavez" />
       </div>
 
       <!-- YOUR NAME & TAGLINE — edit freely -->
@@ -587,6 +690,28 @@
         </div>
       </div>
     </div>
+
+    <!-- Right: animated photo -->
+    <div class="hero-photo-wrap" id="heroPhoto">
+      <!-- Pulsing outer rings -->
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <!-- Spinning gradient border -->
+      <div class="ring-spinner"></div>
+      <!-- Photo with scan line -->
+      <div class="photo-frame">
+        <img src="Jeff_photo.png" alt="Jeff Chavez" />
+        <div class="scan-line"></div>
+      </div>
+      <!-- Corner tech brackets -->
+      <div class="corner-brackets">
+        <span class="cb tl"></span>
+        <span class="cb tr"></span>
+        <span class="cb bl"></span>
+        <span class="cb br"></span>
+      </div>
+    </div>
+
   </div>
 
   <hr class="divider" />
@@ -919,17 +1044,18 @@
 
     // ── Mouse parallax on hero ────────────────────────────────
     const heroInner = document.getElementById('heroInner');
-    const heroAvatar = heroInner.querySelector('.hero-avatar');
-    const heroH1     = heroInner.querySelector('h1');
+    const heroPhoto = document.getElementById('heroPhoto');
+    const heroH1    = heroInner.querySelector('h1');
     let pmx = 0, pmy = 0, ax = 0, ay = 0, tx = 0, ty = 0;
 
     function animateMouse() {
-      ax = lerp(ax, pmx * 9, 0.07);
-      ay = lerp(ay, pmy * 9, 0.07);
-      tx = lerp(tx, pmx * 4, 0.07);
-      ty = lerp(ty, pmy * 4, 0.07);
-      heroAvatar.style.transform = `translate(${ax}px, ${ay}px)`;
-      heroH1.style.transform     = `translate(${tx}px, ${ty}px)`;
+      ax = lerp(ax, pmx * 10, 0.06);
+      ay = lerp(ay, pmy * 10, 0.06);
+      tx = lerp(tx, pmx * 4,  0.06);
+      ty = lerp(ty, pmy * 4,  0.06);
+      // Photo drifts more than the text — gives a depth/parallax feel
+      heroPhoto.style.transform = `translate(${ax}px, ${ay}px)`;
+      heroH1.style.transform    = `translate(${tx}px, ${ty}px)`;
       requestAnimationFrame(animateMouse);
     }
     document.addEventListener('mousemove', e => {
