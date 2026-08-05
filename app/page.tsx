@@ -66,20 +66,6 @@ const work = [
     result: "Manual inbox triage eliminated across 3 platforms",
   },
   {
-    company: "Servio Technologies",
-    year: "2021–2025",
-    title: "Client Operations for an HR & Payroll Platform",
-    body: "Managing 50+ monthly client issues for a Frappe-based HR and payroll platform meant the process itself had to do the heavy lifting. I built HubSpot and Airtable automations for ticket routing, client tracking, and escalation — giving every issue a clear, repeatable path from open to resolved.",
-    result: "50+ monthly issues handled through structured automated workflows",
-  },
-  {
-    company: "Athena",
-    year: "2025",
-    title: "Local SEO from Zero to Top 3",
-    body: "Starting from a technical audit with no prior SEO foundation, I worked through site structure, schema markup, page speed, and local citation cleanup. No paid campaigns. Within months, the brand was ranking in the top 3 positions for its highest-intent local search terms.",
-    result: "Top 3 organic rankings for high-intent local terms — no ad spend",
-  },
-  {
     company: "Personal Build",
     year: "2026",
     title: "AI-Powered Facebook Messenger Support Agent",
