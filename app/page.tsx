@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Header } from "./header";
 import { Footer } from "./footer";
 import { ServicesTabs } from "./services-tabs";
+import { WorkGrid } from "./work-grid";
 
 const stats = [
   { number: "5+", label: "Years of experience" },
@@ -84,6 +85,31 @@ const work = [
     title: "AI-Powered Facebook Messenger Support Agent",
     body: "Facebook Pages get buried in repetitive questions — pricing, availability, policies — that eat hours of manual reply time. I built a self-hosted n8n workflow that listens for Messenger events via webhook, pulls a live knowledge base from a connected Google Doc, and uses an AI agent to reply in seconds — strictly grounded in that source material, with de-duplication logic to hold up under Meta's retry behavior.",
     result: "24/7 Messenger support grounded in a live knowledge base, zero hallucinated replies",
+    detail: {
+      image: "/n8n-messenger-workflow.png",
+      imageWidth: 2512,
+      imageHeight: 1486,
+      problem:
+        "Businesses running a Facebook Page get a steady stream of repetitive customer questions — pricing, availability, policies, FAQs — that eat up hours of manual reply time and slow down response times outside business hours.",
+      solutionIntro:
+        "I built an automated Messenger agent that:",
+      solutionPoints: [
+        "Listens for incoming messages on a Facebook Page in real time via webhook",
+        "Retrieves the business's up-to-date knowledge base (pulled live from a connected Google Doc, so the client can edit answers without touching any code)",
+        "Uses an AI agent to generate accurate, on-brand responses — strictly limited to the provided knowledge base, so it never invents information",
+        "Replies to the customer directly in Messenger within seconds",
+        "Maintains short-term conversation memory, so follow-up questions stay in context",
+      ],
+      highlights: [
+        "Workflow automation: n8n, self-hosted for full control and no per-message platform fees",
+        "AI integration: configurable LLM backend (tested with Google Gemini and OpenRouter), with prompt engineering to constrain responses to verified source material and reduce hallucination",
+        "Live knowledge base: Google Docs integration means non-technical team members can update what the bot knows without any developer involvement",
+        "Reliability engineering: webhook verification, event filtering, and de-duplication logic to prevent duplicate replies under Meta's retry behavior",
+        "Cost-conscious architecture: built to run on free-tier AI model quotas where possible, with clear guidance for scaling up as usage grows",
+      ],
+      resultText:
+        "A responsive, always-on support assistant that reduces manual reply workload, keeps answers consistent and accurate, and can be extended to other channels (Instagram, WhatsApp, web chat) using the same core architecture.",
+    },
   },
 ];
 
@@ -251,32 +277,7 @@ export default function Home() {
               A few projects that show how I work — the problem, what I did,
               and what came out the other end.
             </p>
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {work.map((w) => (
-                <div
-                  key={w.title}
-                  className="flex flex-col rounded-sm border border-border p-6 transition-colors hover:border-accent/50"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] tracking-[0.1em] text-accent uppercase">
-                      {w.company}
-                    </span>
-                    <span className="font-mono text-[11px] text-muted">
-                      {w.year}
-                    </span>
-                  </div>
-                  <h3 className="mt-4 text-[15px] font-medium leading-snug">
-                    {w.title}
-                  </h3>
-                  <p className="mt-2.5 flex-1 text-[13px] leading-relaxed text-muted">
-                    {w.body}
-                  </p>
-                  <div className="mt-5 rounded-sm border border-border px-3 py-2 font-mono text-[12px] text-accent">
-                    ↑ {w.result}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <WorkGrid work={work} />
           </section>
 
           {/* ABOUT */}
