@@ -78,6 +78,13 @@ const work = [
     body: "Starting from a technical audit with no prior SEO foundation, I worked through site structure, schema markup, page speed, and local citation cleanup. No paid campaigns. Within months, the brand was ranking in the top 3 positions for its highest-intent local search terms.",
     result: "Top 3 organic rankings for high-intent local terms — no ad spend",
   },
+  {
+    company: "Personal Build",
+    year: "2026",
+    title: "AI-Powered Facebook Messenger Support Agent",
+    body: "Facebook Pages get buried in repetitive questions — pricing, availability, policies — that eat hours of manual reply time. I built a self-hosted n8n workflow that listens for Messenger events via webhook, pulls a live knowledge base from a connected Google Doc, and uses an AI agent to reply in seconds — strictly grounded in that source material, with de-duplication logic to hold up under Meta's retry behavior.",
+    result: "24/7 Messenger support grounded in a live knowledge base, zero hallucinated replies",
+  },
 ];
 
 const tags = [
@@ -91,6 +98,7 @@ const tags = [
   "Claude AI",
   "SEO",
   "Google Workspace",
+  "n8n",
 ];
 
 function SectionLabel({ children }: { children: string }) {
@@ -240,7 +248,7 @@ export default function Home() {
               Things I&apos;ve actually built
             </h2>
             <p className="mt-3 max-w-lg text-[14px] leading-relaxed text-muted">
-              Three projects that show how I work — the problem, what I did,
+              A few projects that show how I work — the problem, what I did,
               and what came out the other end.
             </p>
             <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
