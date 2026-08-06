@@ -4,10 +4,15 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 
+export type WorkImage = {
+  src: string;
+  width: number;
+  height: number;
+  caption?: string;
+};
+
 export type WorkDetail = {
-  image: string;
-  imageWidth: number;
-  imageHeight: number;
+  images: WorkImage[];
   problem: string;
   solutionIntro: string;
   solutionPoints: string[];
@@ -110,10 +115,10 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
             </button>
 
             <Image
-              src={active.detail.image}
+              src={active.detail.images[0].src}
               alt={active.title}
-              width={active.detail.imageWidth}
-              height={active.detail.imageHeight}
+              width={active.detail.images[0].width}
+              height={active.detail.images[0].height}
               className="w-full rounded-t-sm border-b border-border object-cover"
             />
 
@@ -154,6 +159,27 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
                   </li>
                 ))}
               </ul>
+
+              {active.detail.images.length > 1 && (
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {active.detail.images.slice(1).map((img) => (
+                    <div key={img.src}>
+                      <Image
+                        src={img.src}
+                        alt={img.caption ?? active.title}
+                        width={img.width}
+                        height={img.height}
+                        className="w-full rounded-sm border border-border object-cover"
+                      />
+                      {img.caption && (
+                        <p className="mt-1.5 font-mono text-[11px] text-muted">
+                          {img.caption}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
 
               <p className="mt-6 font-mono text-[12px] tracking-[0.12em] text-accent uppercase">
                 Technical Highlights

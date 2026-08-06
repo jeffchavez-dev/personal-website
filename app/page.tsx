@@ -72,9 +72,9 @@ const work = [
     body: "Facebook Pages get buried in repetitive questions — pricing, availability, policies — that eat hours of manual reply time. I built a self-hosted n8n workflow that listens for Messenger events via webhook, pulls a live knowledge base from a connected Google Doc, and uses an AI agent to reply in seconds — strictly grounded in that source material, with de-duplication logic to hold up under Meta's retry behavior.",
     result: "24/7 Messenger support grounded in a live knowledge base, zero hallucinated replies",
     detail: {
-      image: "/n8n-messenger-workflow.png",
-      imageWidth: 2512,
-      imageHeight: 1486,
+      images: [
+        { src: "/n8n-messenger-workflow.png", width: 2512, height: 1486 },
+      ],
       problem:
         "Businesses running a Facebook Page get a steady stream of repetitive customer questions — pricing, availability, policies, FAQs — that eat up hours of manual reply time and slow down response times outside business hours.",
       solutionIntro:
@@ -101,6 +101,77 @@ const work = [
         "Google Docs",
         "Google Gemini",
         "OpenRouter",
+      ],
+    },
+  },
+  {
+    company: "OVO Fund",
+    year: "2026",
+    title: "CRM Automation & Outreach Sequences for a VC Firm",
+    body: "OVO Fund, an active pre-seed VC firm, needed founder outreach and CRM hygiene handled without duct-taping together Zapier or Make. I built the entire system natively in Attio — a personalized 3-touch outreach sequence, trigger-based lead approval, automatic follow-up escalation, and a 90-day stale-record cleanup — so the pipeline moves itself.",
+    result: "400+ automated workflow executions, zero manual follow-up tracking",
+    detail: {
+      images: [
+        {
+          src: "/ovo-sequence-editor.png",
+          width: 2526,
+          height: 1540,
+        },
+        {
+          src: "/ovo-lead-approval-workflow.png",
+          width: 1816,
+          height: 1502,
+          caption: "Lead Approval Workflow — 20 runs",
+        },
+        {
+          src: "/ovo-1st-2nd-touch-workflow.png",
+          width: 1848,
+          height: 1472,
+          caption: "1st → 2nd Touch Follow-up — 202 runs",
+        },
+        {
+          src: "/ovo-2nd-touch-workflow.png",
+          width: 1826,
+          height: 1490,
+          caption: "2nd Touch Sequence — 202 runs",
+        },
+        {
+          src: "/ovo-stale-cleanup-workflow.png",
+          width: 1850,
+          height: 1498,
+          caption: "90-Day Stale Record Cleanup — 241 runs",
+        },
+      ],
+      problem:
+        "OVO Fund needed a founder outreach and CRM hygiene system for its pre-seed pipeline — but wanted it built natively inside Attio rather than stitched together with an external automation platform, to keep the stack simple and avoid extra dependencies.",
+      solutionIntro:
+        "I built five interconnected Attio workflows that run the entire founder outreach and CRM hygiene loop natively — no Zapier, no Make:",
+      solutionPoints: [
+        "Hacker House Outreach — 3-Touch Email Sequence: personalized, multi-step outreach to founders at accelerator houses using dynamic variables ({Name}, {Hacker House}, {Outreach Angle}, {OVO Role})",
+        "Lead Approval Workflow: fires on attribute change, filters eligible contacts, auto-enrolls them into the sequence, and updates the CRM record",
+        "1st → 2nd Touch Follow-up: detects no response after 2 days, confirms the contact is still at 1st Touch, creates a follow-up task, and advances CRM status automatically",
+        "2nd Touch Sequence: triggers after 4 days of silence, recalculates the due date, and creates the next send task",
+        "90-Day Stale Record Cleanup: detects a status change to \"scheduled meeting,\" waits 90 days, then removes the record to keep the pipeline clean",
+      ],
+      highlights: [
+        "Native Attio build end to end: sequences, workflows, lists, filters, delays, and calculated fields — no external automation platform",
+        "Dynamic personalization at scale via merge variables across every touch",
+        "Delivery windows configured for 9AM–3PM, business days only, with auto-threading",
+        "Smart exit criteria — sequence auto-stops the moment a reply is received or a meeting is booked",
+        "400+ combined workflow runs in production across the four supporting automations",
+      ],
+      resultText:
+        "400+ automated workflow executions across the founder outreach pipeline, eliminating manual follow-up tracking entirely — from first touch through CRM cleanup.",
+      tools: [
+        "Attio",
+        "Sequences",
+        "Workflows",
+        "Lists",
+        "Filters",
+        "Delay",
+        "Adjust Time",
+        "Create Task",
+        "Update Record",
       ],
     },
   },
