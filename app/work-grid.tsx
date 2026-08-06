@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { Maximize2, X } from "lucide-react";
 
 export type WorkImage = {
   src: string;
@@ -30,21 +30,69 @@ export type WorkItem = {
   detail?: WorkDetail;
 };
 
+function ZoomableImage({
+  image,
+  alt,
+  className,
+  rounded = "rounded-sm",
+  onOpen,
+}: {
+  image: WorkImage;
+  alt: string;
+  className: string;
+  rounded?: string;
+  onOpen: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={`View "${alt}" fullscreen`}
+      className={`group relative block w-full cursor-zoom-in overflow-hidden ${rounded}`}
+    >
+      <Image
+        src={image.src}
+        alt={alt}
+        width={image.width}
+        height={image.height}
+        className={className}
+      />
+      <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/30">
+        <span className="flex h-9 w-9 items-center justify-center rounded-sm border border-white/40 bg-black/40 text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
+          <Maximize2 size={15} strokeWidth={1.75} />
+        </span>
+      </span>
+    </button>
+  );
+}
+
 export function WorkGrid({ work }: { work: WorkItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<WorkImage | null>(null);
+  const lightboxRef = useRef<WorkImage | null>(null);
+  lightboxRef.current = lightbox;
   const active = openIndex !== null ? work[openIndex] : null;
 
   useEffect(() => {
     if (openIndex === null) return;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenIndex(null);
+      if (e.key !== "Escape") return;
+      if (lightboxRef.current) {
+        setLightbox(null);
+      } else {
+        setOpenIndex(null);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
+  }, [openIndex]);
+
+  useEffect(() => {
+    if (openIndex === null) setLightbox(null);
   }, [openIndex]);
 
   return (
@@ -114,12 +162,12 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
               <X size={16} strokeWidth={1.75} />
             </button>
 
-            <Image
-              src={active.detail.images[0].src}
+            <ZoomableImage
+              image={active.detail.images[0]}
               alt={active.title}
-              width={active.detail.images[0].width}
-              height={active.detail.images[0].height}
-              className="w-full rounded-t-sm border-b border-border object-cover"
+              className="w-full border-b border-border object-cover"
+              rounded="rounded-t-sm"
+              onOpen={() => setLightbox(active.detail!.images[0])}
             />
 
             <div className="p-6 sm:p-8">
@@ -164,12 +212,11 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {active.detail.images.slice(1).map((img) => (
                     <div key={img.src}>
-                      <Image
-                        src={img.src}
+                      <ZoomableImage
+                        image={img}
                         alt={img.caption ?? active.title}
-                        width={img.width}
-                        height={img.height}
-                        className="w-full rounded-sm border border-border object-cover"
+                        className="w-full border border-border object-cover"
+                        onOpen={() => setLightbox(img)}
                       />
                       {img.caption && (
                         <p className="mt-1.5 font-mono text-[11px] text-muted">
@@ -220,6 +267,34 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4 sm:p-10"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            type="button"
+            aria-label="Close fullscreen image"
+            onClick={() => setLightbox(null)}
+            className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-sm border border-white/20 bg-black/50 text-white transition-colors hover:border-white/50"
+          >
+            <X size={18} strokeWidth={1.75} />
+          </button>
+          <Image
+            src={lightbox.src}
+            alt={lightbox.caption ?? "Fullscreen view"}
+            width={lightbox.width}
+            height={lightbox.height}
+            className="max-h-full max-w-full cursor-zoom-out object-contain"
+          />
+          {lightbox.caption && (
+            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[12px] text-white/70">
+              {lightbox.caption}
+            </p>
+          )}
         </div>
       )}
     </>
