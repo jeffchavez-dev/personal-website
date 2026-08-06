@@ -95,6 +95,13 @@ const work = [
       ],
       resultText:
         "A responsive, always-on support assistant that reduces manual reply workload, keeps answers consistent and accurate, and can be extended to other channels (Instagram, WhatsApp, web chat) using the same core architecture.",
+      tools: [
+        "n8n",
+        "Facebook Messenger",
+        "Google Docs",
+        "Google Gemini",
+        "OpenRouter",
+      ],
     },
   },
 ];

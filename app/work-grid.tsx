@@ -13,6 +13,7 @@ export type WorkDetail = {
   solutionPoints: string[];
   highlights: string[];
   resultText: string;
+  tools: string[];
 };
 
 export type WorkItem = {
@@ -175,6 +176,22 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
               <p className="mt-2 text-[14px] leading-relaxed text-muted">
                 {active.detail.resultText}
               </p>
+
+              <div className="mt-6 rounded-sm border border-border bg-surface p-6">
+                <p className="font-mono text-[12px] tracking-[0.12em] text-muted uppercase">
+                  Tools I Use
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {active.detail.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="rounded-sm border border-border px-2.5 py-1 font-mono text-[12px] text-accent"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
