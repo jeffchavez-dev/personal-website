@@ -106,6 +106,25 @@ const work = [
   },
 ];
 
+const certifications = [
+  {
+    title: "No Code Automation with Zapier",
+    issuer: "Tara AI Community",
+    detail:
+      "Built three hands-on automations during the course: a content-repurposing pipeline (MP4 → transcript → LinkedIn/Instagram posts), a 5-workflow Asana CRM automation, and a webhook-driven lead qualification pipeline with enrichment and scoring.",
+  },
+  {
+    title: "Hands-On ChatGPT AI: Build AI Powered Tools and Workflows",
+    issuer: "Udemy",
+  },
+  {
+    title: "HTML, CSS, & JavaScript",
+    issuer: "Cambridge Certification Authority",
+  },
+  { title: "GoHighLevel", issuer: "Excelerate Digital Marketing" },
+  { title: "Data Analytics Fundamentals", issuer: "Datasense Analytics" },
+];
+
 const tags = [
   "Make",
   "Zapier",
@@ -315,6 +334,33 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </section>
+
+          {/* TRAINING / CERTIFICATIONS */}
+          <section id="training" className="border-b border-border py-20">
+            <SectionLabel>cat ./certifications.log</SectionLabel>
+            <h2 className="mt-4 font-serif text-2xl tracking-tight sm:text-3xl">
+              Training &amp; Certifications
+            </h2>
+            <ul className="mt-8 flex max-w-2xl flex-col divide-y divide-border border-y border-border">
+              {certifications.map((c) => (
+                <li key={c.title} className="flex flex-col gap-1.5 py-4">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                    <span className="text-[14px] text-foreground">
+                      {c.title}
+                    </span>
+                    <span className="font-mono text-[12px] whitespace-nowrap text-muted">
+                      {c.issuer}
+                    </span>
+                  </div>
+                  {c.detail && (
+                    <p className="max-w-xl text-[13px] leading-relaxed text-muted">
+                      {c.detail}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
 
