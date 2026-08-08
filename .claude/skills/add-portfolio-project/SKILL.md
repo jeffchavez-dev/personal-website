@@ -140,7 +140,10 @@ Technical Highlights Jeff pasted and ask: is this one straight-through path,
 one path with decisions in it, or several things coordinating with each
 other / genuine model reasoning? That question is usually enough to place it.
 Write `levelReasoning` the same way as the examples above — name the *specific
-thing* that earns the tier, not a generic restatement of the level name.
+thing* that earns the tier, not a generic restatement of the level name. Don't
+phrase it relative to the other cards ("the only project here with...") — the
+Work section keeps growing, so a claim like that goes stale the moment a
+similar project gets added. Describe what the project itself does, full stop.
 
 Two different lengths matter here, and mixing them up is the easiest way to
 get this wrong:

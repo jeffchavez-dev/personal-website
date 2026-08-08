@@ -105,7 +105,7 @@ const work: WorkItem[] = [
         "OpenRouter",
       ],
       levelReasoning:
-        "The only project here with actual AI reasoning: an LLM agent that has to interpret messages, stay grounded in a live knowledge base, and hold conversation memory — not just move data between systems. It also runs a public-facing endpoint, which added its own complexity (webhook verification, de-duplication, retry handling) that a purely internal automation wouldn't need.",
+        "Advanced because of the actual AI reasoning involved: an LLM agent that has to interpret messages, stay grounded in a live knowledge base, and hold conversation memory — not just move data between systems. It also runs a public-facing endpoint, which added its own complexity (webhook verification, de-duplication, retry handling) that a purely internal automation wouldn't need.",
     },
   },
   {
