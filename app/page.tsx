@@ -175,6 +175,48 @@ const work = [
       ],
     },
   },
+  {
+    company: "Boho",
+    year: "2026",
+    title: "Appointment Data Sync Automation (Boulevard → Google Sheets)",
+    body: "Boho's booking data from Boulevard had to be copied into spreadsheets by hand — slow, error-prone, and worse whenever a booking had multiple providers or dates. I built a pair of Zapier workflows that listen for new bookings and completions, run every record through a six-step formatting chain, and write clean, analysis-ready rows straight into Google Sheets.",
+    result: "Zero manual data entry, formatting errors eliminated at the source",
+    detail: {
+      images: [
+        {
+          src: "/boho-new-appointment-zap.png",
+          width: 2260,
+          height: 1440,
+        },
+        {
+          src: "/boho-appointment-completed-zap.png",
+          width: 2256,
+          height: 1446,
+          caption: "Appointment Completed → Sheet",
+        },
+      ],
+      problem:
+        "Salon/spa businesses running on Boulevard generate a constant stream of booking and appointment-completion data, but without automation, staff have to manually copy that information into spreadsheets for reporting — a slow, error-prone process that gets worse as multi-provider or multi-date bookings introduce messy, hard-to-reconcile records.",
+      solutionIntro: "I built a pair of automated Zapier workflows that:",
+      solutionPoints: [
+        "Listen for two key events from Boulevard in real time — new appointment bookings and appointment completions",
+        "Normalize and reformat appointment and order IDs so every record lands in a consistent format",
+        "Split multi-value fields (appointments with more than one provider or date) into clean, individual data points instead of ambiguous merged records",
+        "Standardize all dates into a single consistent format regardless of how Boulevard sends them",
+        "Write the finished, validated data directly into Google Sheets — no manual cleanup required",
+      ],
+      highlights: [
+        "Workflow automation: Zapier, with a dual-trigger architecture so booking and completion events are tracked as separate stages of the same appointment lifecycle",
+        "Data integrity: a six-step Formatter chain runs before every write, so only clean, analysis-ready data ever reaches the spreadsheet",
+        "Multi-value handling: purpose-built logic to split duplicate providers and dates that Boulevard bundles into a single record",
+        "Reliability: consistent formatting rules applied identically across both workflows, so reporting stays accurate even as booking volume scales",
+        "Zero manual intervention: staff never touch the spreadsheet directly — it's always current",
+      ],
+      resultText:
+        "Accurate, always-current appointment records with zero manual data entry, formatting errors eliminated at the source, and a clear, reportable trail of every appointment from booking through completion.",
+      tools: ["Zapier", "Boulevard", "Formatter by Zapier", "Google Sheets"],
+    },
+  },
 ];
 
 const certifications = [
