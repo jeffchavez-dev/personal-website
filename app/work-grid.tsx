@@ -11,6 +11,8 @@ export type WorkImage = {
   caption?: string;
 };
 
+export type AutomationLevel = "Easy" | "Moderate" | "Advanced";
+
 export type WorkDetail = {
   images: WorkImage[];
   problem: string;
@@ -19,6 +21,7 @@ export type WorkDetail = {
   highlights: string[];
   resultText: string;
   tools: string[];
+  levelReasoning: string;
 };
 
 export type WorkItem = {
@@ -27,8 +30,31 @@ export type WorkItem = {
   title: string;
   body: string;
   result: string;
+  level: AutomationLevel;
   detail?: WorkDetail;
 };
+
+const LEVEL_DOTS: Record<AutomationLevel, number> = {
+  Easy: 1,
+  Moderate: 2,
+  Advanced: 3,
+};
+
+function LevelMeter({ level }: { level: AutomationLevel }) {
+  const filled = LEVEL_DOTS[level];
+  return (
+    <span className="inline-flex items-center gap-1" aria-hidden="true">
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          className={`h-1.5 w-1.5 rounded-full ${
+            i < filled ? "bg-accent" : "bg-border"
+          }`}
+        />
+      ))}
+    </span>
+  );
+}
 
 function ZoomableImage({
   image,
@@ -125,7 +151,13 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
                   {w.year}
                 </span>
               </div>
-              <h3 className="mt-4 text-[15px] font-medium leading-snug">
+              <div className="mt-2.5 flex items-center gap-1.5">
+                <LevelMeter level={w.level} />
+                <span className="font-mono text-[10px] tracking-[0.1em] text-muted uppercase">
+                  {w.level}
+                </span>
+              </div>
+              <h3 className="mt-3 text-[15px] font-medium leading-snug">
                 {w.title}
               </h3>
               <p className="mt-2.5 flex-1 text-[13px] leading-relaxed text-muted">
@@ -182,6 +214,16 @@ export function WorkGrid({ work }: { work: WorkItem[] }) {
               <h3 className="mt-3 font-serif text-2xl tracking-tight">
                 {active.title}
               </h3>
+
+              <div className="mt-4 flex items-center gap-2">
+                <LevelMeter level={active.level} />
+                <span className="font-mono text-[12px] tracking-[0.1em] text-foreground uppercase">
+                  {active.level} automation
+                </span>
+              </div>
+              <p className="mt-2 text-[13px] leading-relaxed text-muted">
+                {active.detail.levelReasoning}
+              </p>
 
               <p className="mt-6 font-mono text-[12px] tracking-[0.12em] text-accent uppercase">
                 The Problem

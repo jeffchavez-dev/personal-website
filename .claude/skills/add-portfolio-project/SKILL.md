@@ -98,6 +98,7 @@ type WorkItem = {
   title: string;
   body: string;      // card teaser, ~50-70 words
   result: string;     // one punchy line, shown as "↑ {result}" on the card
+  level: "Easy" | "Moderate" | "Advanced"; // shown as a dot-meter + label on every card, detail's optional or not
   detail?: WorkDetail; // present = card is clickable, opens the case-study modal
 };
 
@@ -109,10 +110,37 @@ type WorkDetail = {
   highlights: string[];
   resultText: string;  // fuller version of `result`, closes out the modal
   tools: string[];      // rendered as chips in a "Tools I Use" box
+  levelReasoning: string; // shown right under the title in the modal, explains the `level` call
 };
 
 type WorkImage = { src: string; width: number; height: number; caption?: string };
 ```
+
+### Setting `level` and `levelReasoning`
+
+Every project gets an automation-level tag — this is the norm now, not a
+one-off. It's rated on what actually drives the complexity, not tool count or
+how long the write-up is:
+
+- **Easy** — a single linear workflow: trigger → transform → write, no
+  branching. (Example: the Boho Zapier↔Sheets sync — careful data cleaning,
+  but no decision-making.)
+- **Moderate** — one workflow, but with real conditional logic: routing,
+  tagging rules, branches based on content. (Example: the Athena inbox
+  rebuild — cross-platform routing with priority/urgency rules, still one
+  self-contained workflow.)
+- **Advanced** — either multiple workflows that hand off to each other
+  (orchestration across stages, delays, exit criteria — like the OVO Fund
+  Attio build's five interlocking workflows), or a workflow with genuine AI
+  reasoning in it (an LLM agent making judgment calls, not just moving data —
+  like the Messenger agent's knowledge-grounded replies).
+
+If a new project doesn't obviously fit one of these, reread the Solution/
+Technical Highlights Jeff pasted and ask: is this one straight-through path,
+one path with decisions in it, or several things coordinating with each
+other / genuine model reasoning? That question is usually enough to place it.
+Write `levelReasoning` the same way as the examples above — name the *specific
+thing* that earns the tier, not a generic restatement of the level name.
 
 Two different lengths matter here, and mixing them up is the easiest way to
 get this wrong:
@@ -144,6 +172,7 @@ for the shape and register to match:
   title: "Appointment Data Sync Automation (Boulevard → Google Sheets)",
   body: "Boho's booking data from Boulevard had to be copied into spreadsheets by hand — slow, error-prone, and worse whenever a booking had multiple providers or dates. I built a pair of Zapier workflows that listen for new bookings and completions, run every record through a six-step formatting chain, and write clean, analysis-ready rows straight into Google Sheets.",
   result: "Zero manual data entry, formatting errors eliminated at the source",
+  level: "Easy",
   detail: {
     images: [
       { src: "/boho-new-appointment-zap.png", width: 2260, height: 1440 },
@@ -155,6 +184,7 @@ for the shape and register to match:
     highlights: [ "Workflow automation: Zapier, with a dual-trigger architecture...", /* ... */ ],
     resultText: "Accurate, always-current appointment records with zero manual data entry...",
     tools: ["Zapier", "Boulevard", "Formatter by Zapier", "Google Sheets"],
+    levelReasoning: "A linear trigger → transform → write pattern, run twice for the two Boulevard events. The six-step Formatter chain requires care, but there's no branching logic, no AI, and no coordination between workflows — it's a clean, well-built data pipeline rather than a complex system.",
   },
 },
 ```
@@ -175,8 +205,10 @@ Then start the dev server through the Browser preview tool (config name
 `personal-website`, already set up in `~/Documents/.claude/launch.json`
 pointing `--prefix` at the scratchpad path) and check the new card:
 
-1. It renders with the right title/company/year.
-2. Clicking it opens the modal with the full write-up.
+1. It renders with the right title/company/year and the level dot-meter
+   matches the tier (1/2/3 dots filled for Easy/Moderate/Advanced).
+2. Clicking it opens the modal with the full write-up, including the level
+   label + `levelReasoning` right under the title.
 3. Hero and gallery images load, and gallery captions show.
 4. Clicking an image opens the fullscreen lightbox.
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Header } from "./header";
 import { Footer } from "./footer";
 import { ServicesTabs } from "./services-tabs";
-import { WorkGrid } from "./work-grid";
+import { WorkGrid, type WorkItem } from "./work-grid";
 
 const stats = [
   { number: "5+", label: "Years of experience" },
@@ -57,13 +57,14 @@ const process = [
   },
 ];
 
-const work = [
+const work: WorkItem[] = [
   {
     company: "Athena",
     year: "2025",
     title: "Executive Inbox Rebuilt from Scratch",
     body: "The team was manually sorting incoming messages across three platforms every morning. I mapped their routing logic, rebuilt it in Make and Zapier, and wired it to Gmail, Outlook, and Superhuman — so priority, client, and urgency tagging happens the moment a message arrives.",
     result: "Manual inbox triage eliminated across 3 platforms",
+    level: "Moderate",
   },
   {
     company: "Personal Build",
@@ -71,6 +72,7 @@ const work = [
     title: "AI-Powered Facebook Messenger Support Agent",
     body: "Facebook Pages get buried in repetitive questions — pricing, availability, policies — that eat hours of manual reply time. I built a self-hosted n8n workflow that listens for Messenger events via webhook, pulls a live knowledge base from a connected Google Doc, and uses an AI agent to reply in seconds — strictly grounded in that source material, with de-duplication logic to hold up under Meta's retry behavior.",
     result: "24/7 Messenger support grounded in a live knowledge base, zero hallucinated replies",
+    level: "Advanced",
     detail: {
       images: [
         { src: "/n8n-messenger-workflow.png", width: 2512, height: 1486 },
@@ -102,6 +104,8 @@ const work = [
         "Google Gemini",
         "OpenRouter",
       ],
+      levelReasoning:
+        "The only project here with actual AI reasoning: an LLM agent that has to interpret messages, stay grounded in a live knowledge base, and hold conversation memory — not just move data between systems. It also runs a public-facing endpoint, which added its own complexity (webhook verification, de-duplication, retry handling) that a purely internal automation wouldn't need.",
     },
   },
   {
@@ -110,6 +114,7 @@ const work = [
     title: "CRM Automation & Outreach Sequences for a VC Firm",
     body: "OVO Fund, an active pre-seed VC firm, needed founder outreach and CRM hygiene handled without duct-taping together Zapier or Make. I built the entire system natively in Attio — a personalized 3-touch outreach sequence, trigger-based lead approval, automatic follow-up escalation, and a 90-day stale-record cleanup — so the pipeline moves itself.",
     result: "400+ automated workflow executions, zero manual follow-up tracking",
+    level: "Advanced",
     detail: {
       images: [
         {
@@ -173,6 +178,8 @@ const work = [
         "Create Task",
         "Update Record",
       ],
+      levelReasoning:
+        "Not one workflow but five that hand off to each other across a multi-week lifecycle — approval triggers the sequence, timeouts trigger follow-ups, follow-ups update CRM status, and stale records get cleaned up 90 days later. The complexity is in the orchestration and state management between workflows, not any single step.",
     },
   },
   {
@@ -181,6 +188,7 @@ const work = [
     title: "Appointment Data Sync Automation (Boulevard → Google Sheets)",
     body: "Boho's booking data from Boulevard had to be copied into spreadsheets by hand — slow, error-prone, and worse whenever a booking had multiple providers or dates. I built a pair of Zapier workflows that listen for new bookings and completions, run every record through a six-step formatting chain, and write clean, analysis-ready rows straight into Google Sheets.",
     result: "Zero manual data entry, formatting errors eliminated at the source",
+    level: "Easy",
     detail: {
       images: [
         {
@@ -215,6 +223,8 @@ const work = [
       resultText:
         "Accurate, always-current appointment records with zero manual data entry, formatting errors eliminated at the source, and a clear, reportable trail of every appointment from booking through completion.",
       tools: ["Zapier", "Boulevard", "Formatter by Zapier", "Google Sheets"],
+      levelReasoning:
+        "A linear trigger → transform → write pattern, run twice for the two Boulevard events. The six-step Formatter chain requires care, but there's no branching logic, no AI, and no coordination between workflows — it's a clean, well-built data pipeline rather than a complex system.",
     },
   },
 ];
