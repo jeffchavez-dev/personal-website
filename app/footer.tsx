@@ -5,7 +5,7 @@ export function Footer() {
         <p className="font-mono">© {new Date().getFullYear()} Jeff Chavez</p>
         <div className="flex gap-5 font-mono">
           <a
-            href="mailto:jeff.chavez0828@gmail.com"
+            href="mailto:jeffchavez.ai@gmail.com"
             className="transition-colors hover:text-accent"
           >
             Email

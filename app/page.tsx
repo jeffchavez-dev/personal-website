@@ -503,10 +503,10 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <a
-                href="mailto:jeff.chavez0828@gmail.com"
+                href="mailto:jeffchavez.ai@gmail.com"
                 className="rounded-sm bg-accent px-5 py-2.5 font-mono text-[13px] text-accent-foreground transition-opacity hover:opacity-90"
               >
-                jeff.chavez0828@gmail.com
+                jeffchavez.ai@gmail.com
               </a>
               <a
                 href="https://www.linkedin.com/in/jefffchavez1689/"
