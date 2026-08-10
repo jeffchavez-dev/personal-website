@@ -324,7 +324,7 @@ export default function Home() {
               width={288}
               height={288}
               priority
-              className="h-28 w-28 flex-shrink-0 rounded-full border border-border object-cover object-top sm:h-36 sm:w-36"
+              className="h-28 w-28 flex-shrink-0 rounded-sm border border-border object-cover object-top sm:h-36 sm:w-36"
             />
           </section>
 
